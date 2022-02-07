@@ -1,0 +1,18 @@
+extends Layout
+
+block content
+    h1 Let's get started 🚀
+    p First we need to add a habit. Each habit you create will be assigned a monetary value to help motivation 🤑.
+    small 👉 You can manually adjust the monetary value later when you create more habits.
+    br
+    br
+    form
+        label(for="name") What is the habit's name?
+        input(type="text" id="name" required)
+        label(for="frequency") How often do you do it?
+        select(id="frequency" required)
+            option(value="" selected=true) Select a frequency
+            option Multiple times a day
+            option Once a day
+            option Less than once a day
+        button(type="submit") Submit

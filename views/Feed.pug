@@ -1,0 +1,13 @@
+extends Layout
+
+block content
+    h1 Here's what you've accomplished 🥳
+    small 👉 Accomplished more?
+        a(href="/log")  Click here to log another activity.
+    br
+    br
+    each feedItem in feed
+      div(class="feed-item")
+        p #{feedItem.name}
+        p 💸 #{feedItem.value}
+        small ⏰ #{feedItem.when}

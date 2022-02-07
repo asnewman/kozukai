@@ -1,0 +1,18 @@
+.feed-item {
+    padding: 20px;
+    box-shadow: 0 0.125rem 1rem rgba(27, 40, 50, 0.04),0 0.125rem 2rem rgba(27, 40, 50, 0.08),0 0 0 0.0625rem rgba(27, 40, 50, 0.024);
+    margin-bottom: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.feed-item p {
+    margin-bottom: 5px;
+}
+
+.feed-item small {
+    font-size: 10px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}

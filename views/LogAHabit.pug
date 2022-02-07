@@ -1,0 +1,14 @@
+extends Layout
+
+block content
+    h1 Log a habit 📋
+    small
+        a(href="/feed") 👉 View your accomplishments.
+    br
+    small 👉 Need to make a change?
+        a  Click here to add, edit, or remove a habit type.
+    br
+    br
+    p Select a habit from below to log:
+    each habit in habits
+        button #{habit.name}
