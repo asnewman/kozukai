@@ -1,9 +1,15 @@
 extends Layout
 
 block content
-    h1 Let's get started 🚀
-    p First we need to add a habit. Each habit you create will be assigned a monetary value to help motivation 🤑.
-    small 👉 You can manually adjust the monetary value later when you create more habits.
+    h1 Create a habit 🆕
+    small
+        a(href="/accomplishments") 👉 View your accomplishments.
+    br
+    small
+        a(href="/log") 👉 Log an accomplishments.
+    br
+    small
+        a(href="/habits") 👉 Manage your habits.
     br
     br
     form(action="/new-habit" method="post")

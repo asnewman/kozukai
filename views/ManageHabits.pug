@@ -1,0 +1,22 @@
+extends Layout
+
+block content
+    h1 Manage Habits ✨
+    small
+        a(href="/accomplishments") 👉 View your accomplishments.
+    br
+    small
+        a(href="/log") 👉 Log an accomplishments.
+    br
+    br
+    p
+        a(href="/create-habit")
+            strong Create a new habit here.
+    p Here are your habits:
+    small Format: name value
+    br
+    br
+    form
+      each habit in habits
+        input(type="text" name=`${habit.id}` value=`${habit.name} ${habit.value}`)
+    button(type="submit") Save

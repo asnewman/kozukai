@@ -1,0 +1,20 @@
+extends Layout
+
+block content
+    h1 New habit created 🥳
+    p Here is what was added:
+        b  #{name}
+        span  with a value of
+        b  $#{value}
+        span .
+    small
+        a(href="/accomplishments") 👉 View your accomplishments.
+    br
+    small
+        a(href="/log") 👉 Log an accomplishments.
+    br
+    small
+        a(href="/habits") 👉 Manage your habits.
+    br
+    small
+        a(href="/create-habit")  👉 Add another habit.

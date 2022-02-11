@@ -1,0 +1,17 @@
+extends Layout
+
+block content
+    h1 Here's what you've accomplished 🥳
+    small
+        a(href="/log") 👉 Log an accomplishments.
+    br
+    small
+        a(href="/habits") 👉 Manage your habits.
+    br
+    br
+    h2 Total 💸: $#{totalCash}
+    each accomplishment in accomplishments
+        div(class="accomplishment-item")
+            p #{accomplishment.name}
+            p 💸 #{accomplishment.value}
+            small ⏰ #{accomplishment.when}
