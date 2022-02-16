@@ -11,4 +11,6 @@ block content
     br
     p Select a habit from below to log:
     each habit in habits
-        button #{habit.name}
+        form(action="/log" method="post")
+            input(class="hidden" type="text" name=`${habit.id}`)
+            button(type="submit") #{habit.name}

@@ -19,6 +19,7 @@ class SpendingService {
                 new Spending(
                     rawSpendings.name,
                     rawSpendings.value,
+                    rawSpendings.timestamp
                 )
         );
 
@@ -26,10 +27,13 @@ class SpendingService {
     }
 
     async createSpendingForUser(userId: string, spending: Spending) {
-        await this.supabaseClient.from("Spendings").upsert({
+        console.log(spending)
+        console.log(await this.supabaseClient.from("Spendings").upsert({
             name: spending.name,
             value: spending.value,
-        })
+            timestamp: spending.timestamp,
+            userId
+        }))
     }
 }
 

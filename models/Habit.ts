@@ -3,8 +3,9 @@ export type HabitFrequency = "multi" | "once" | "sometimes";
 export class Habit {
     private readonly _name: string;
     private _value: number;
+    private _id: number;
 
-    constructor(name: string, value?: number) {
+    constructor(name: string, value?: number, id?: number) {
        this._name = name;
 
        if (value) {
@@ -13,6 +14,10 @@ export class Habit {
        else {
            this._value = 0
        }
+
+       if (id) {
+           this._id = id
+       }
     }
 
     get value(): number {
@@ -20,6 +25,10 @@ export class Habit {
     }
     get name(): string {
         return this._name;
+    }
+
+    get id(): number {
+        return this._id;
     }
 
     setValueFromFrequency(frequency: HabitFrequency) {

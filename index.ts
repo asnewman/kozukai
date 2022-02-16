@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import path from "path";
 import { Habit, HabitFrequency } from "./models/Habit";
 import ClassFactoryService from "./services/ClassFactoryService";
+import Spending from "./models/Spending";
 
 const USER_ID = "8e595889-2fe8-44fd-8885-b95bd8ca76fa";
 
@@ -28,39 +29,6 @@ app.get("/", (req, res) => {
   res.render("Home", { title: "Kozukai - Home" });
 });
 
-const dummyHabits = [
-  {
-    id: 1,
-    name: "📗 Read",
-    value: 3,
-  },
-  {
-    id: 2,
-    name: "😴  Sleep before 1am",
-    value: 5,
-  },
-  {
-    id: 3,
-    name: "🍅 Pomodoro session",
-    value: 2,
-  },
-  {
-    id: 4,
-    name: "🚶 Take a walk",
-    value: 2,
-  },
-  {
-    id: 5,
-    name: "🏃 Exercise",
-    value: 7,
-  },
-  {
-    id: 6,
-    name: "📱 Call family",
-    value: 7,
-  },
-];
-
 app.get("/log", async (req, res) => {
   const habitService = ClassFactoryService.habitService;
   const habits = await habitService.getHabitsForUser(USER_ID);
@@ -71,32 +39,25 @@ app.get("/log", async (req, res) => {
   });
 });
 
-app.get("/accomplishments", (req, res) => {
+app.post('/log', async (req, res) => {
+  const loggedHabitId = parseInt(Object.keys(req.body)[0]);
+  const habitService = ClassFactoryService.habitService
+  const accomplishmentService = ClassFactoryService.accomplishmentService;
+
+  const habit = await habitService.getHabitForUser(USER_ID, loggedHabitId);
+  await accomplishmentService.createAccomplishmentForUser(USER_ID, habit);
+
+  res.redirect("/accomplishments")
+})
+
+app.get("/accomplishments", async (req, res) => {
+  const accomplishmentsService = ClassFactoryService.accomplishmentService
+  const accomplishments = await accomplishmentsService.getAccomplishmentsForUser(USER_ID)
+
   res.render("Accomplishments", {
     title: "Kozukai - Accomplishments",
     totalCash: 23,
-    accomplishments: [
-      {
-        name: "📗 Read",
-        value: 3,
-        when: "3 hours ago",
-      },
-      {
-        name: "🏃 Exercise",
-        value: 7,
-        when: "5 hours ago",
-      },
-      {
-        name: "🍅 Pomodoro session",
-        value: 2,
-        when: "1 day ago",
-      },
-      {
-        name: "🍅 Pomodoro session",
-        value: 3,
-        when: "2 hours ago",
-      },
-    ],
+    accomplishments
   });
 });
 
@@ -112,11 +73,11 @@ app.post("/new-habit", async (req, res) => {
   const name: string = req.body.name;
   const frequency: HabitFrequency = req.body.frequency;
 
-  const habit = new Habit(name);
+  const habit = new Habit(name, undefined, undefined);
   habit.setValueFromFrequency(frequency);
 
   const habitService = ClassFactoryService.habitService;
-  await habitService.createHabitForUser(USER_ID, habit);
+  await habitService.upsertHabitForUser(USER_ID, habit);
 
   return res.render("NewHabit", {
     title: "Kozukai - New Habit Created",
@@ -134,6 +95,45 @@ app.get("/habits", async (req, res) => {
     habits,
   });
 });
+
+app.post("/edit-habits", async (req, res) => {
+  const habitService = ClassFactoryService.habitService;
+  const editedHabits = habitService.habitStringMapToHabits(req.body);
+
+  for (const currHabit of editedHabits) {
+    await habitService.upsertHabitForUser(USER_ID, currHabit);
+  }
+
+  const habits = await habitService.getHabitsForUser(USER_ID);
+
+  return res.render("ManageHabits", {
+    title: "Kozukai - Manage Habits",
+    habits,
+  });
+})
+
+app.get("/spendings", async (req, res) => {
+  const spendingService = ClassFactoryService.spendingService
+  const spendings = await spendingService.getSpendingsForUser(USER_ID)
+
+  return res.render("Spendings", {
+    title: "Kozukai - Spendings",
+    spendings
+  })
+})
+
+app.post("/spendings", async (req, res) => {
+  const { name, price } = req.body;
+  const spendingService = ClassFactoryService.spendingService
+  await spendingService.createSpendingForUser(USER_ID, new Spending(name, parseFloat(price), Date.now()))
+
+  const spendings = await spendingService.getSpendingsForUser(USER_ID)
+
+  return res.render("Spendings", {
+    title: "Kozukai - Spendings",
+    spendings
+  })
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

@@ -1,0 +1,23 @@
+extends Layout
+
+block content
+    h1 Here are your spendings 💸
+    p Add a new spending
+    form(action="/spendings" method="post")
+        label(for="name") Name
+        input(type="text" id="name" name="name" required)
+        label(for="price") Price
+        input(type="number" step="0.01" id="price" name="price" required)
+        button(type="submit") Submit
+    table
+        thead
+            tr
+                th(scope="col") Name
+                th(scope="col") Price
+                th(scope="col") When
+        tbody
+            each spending in spendings
+                tr
+                    td #{spending.name}
+                    td #{spending.value}
+                    td #{spending.getTimeSince()}

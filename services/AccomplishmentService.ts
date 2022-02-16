@@ -1,4 +1,4 @@
-import { SupabaseClient } from "@supabase/supabase-js";
+import {SupabaseClient} from "@supabase/supabase-js";
 import {Habit} from "../models/Habit";
 import Accomplishment from "../models/Accomplishment";
 
@@ -13,26 +13,26 @@ class AccomplishmentService {
     const response = await this.supabaseClient
       .from("Accomplishments")
       .select("*")
-      .eq("userId", userId);
+      .eq("userId", userId)
+      .order("id", { ascending: false });
 
-    const accomplishments = response.body.map(
-      (rawAccomplishment) =>
-        new Accomplishment(
-          rawAccomplishment.name,
-          rawAccomplishment.value,
-          rawAccomplishment.timestamp
-        )
+    return response.body.map(
+        (rawAccomplishment) =>
+            new Accomplishment(
+                rawAccomplishment.name,
+                rawAccomplishment.value,
+                rawAccomplishment.timestamp
+            )
     );
-
-    return accomplishments;
   }
 
   async createAccomplishmentForUser(userId: string, habit: Habit) {
     await this.supabaseClient.from("Accomplishments").upsert({
       name: habit.name,
       value: habit.value,
-      timestamp: Date.now()
-    })
+      timestamp: Date.now(),
+      userId,
+    });
   }
 }
 
