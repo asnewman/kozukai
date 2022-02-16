@@ -10,7 +10,7 @@ import Spending from "./models/Spending";
 const USER_ID = "8e595889-2fe8-44fd-8885-b95bd8ca76fa";
 
 const app = express();
-const port = 5005;
+const port = process.env.PORT || 5000;
 
 app.use(
   cors({
