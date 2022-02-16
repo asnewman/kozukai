@@ -16,6 +16,10 @@ class AccomplishmentService {
       .eq("userId", userId)
       .order("id", { ascending: false });
 
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
+
     return response.body.map(
         (rawAccomplishment) =>
             new Accomplishment(
