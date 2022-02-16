@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "nodemon index.ts",
+    "heroku": "ts-node index.ts",
     "test": "jest"
   },
   "author": "Ashley Newman",
