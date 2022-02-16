@@ -52,11 +52,12 @@ app.post('/log', async (req, res) => {
 
 app.get("/accomplishments", async (req, res) => {
   const accomplishmentsService = ClassFactoryService.accomplishmentService
+  const cashService = ClassFactoryService.cashService
   const accomplishments = await accomplishmentsService.getAccomplishmentsForUser(USER_ID)
 
   res.render("Accomplishments", {
     title: "Kozukai - Accomplishments",
-    totalCash: 23,
+    totalCash: await cashService.calculateCashTotalForUser(USER_ID),
     accomplishments
   });
 });

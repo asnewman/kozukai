@@ -2,12 +2,14 @@ import {createClient, SupabaseClient} from "@supabase/supabase-js";
 import AccomplishmentService from "./AccomplishmentService";
 import HabitService from "./HabitService";
 import SpendingService from "./SpendingService";
+import CashService from "./CashService";
 
 class ClassFactoryService {
     private static _supabaseClient: SupabaseClient | null = null
     private static _accomplishmentService: AccomplishmentService | null = null
     private static _habitService: HabitService | null = null
     private static _spendingService: SpendingService | null = null
+    private static _cashService: CashService | null = null
 
     static get supabaseClient(): SupabaseClient{
         if (!this._supabaseClient) {
@@ -39,6 +41,14 @@ class ClassFactoryService {
         }
 
         return this._spendingService;
+    }
+
+    static get cashService(): CashService {
+        if (!this._cashService) {
+            this._cashService = new CashService(this.accomplishmentService, this.spendingService)
+        }
+
+        return this._cashService
     }
 }
 
