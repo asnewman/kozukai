@@ -1,24 +1,17 @@
-doctype
-html(lang='en' data-theme='light')
-    head
-        meta(charset='utf-8')
-        meta(name="viewport" content="width=device-width, initial-scale=1")
-        link(rel="stylesheet", href="/css/style.css")
-        link(rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css")
-        title  #{title}
-    body
-        main(class="container")
-            nav
-                ul
-                    li
-                        strong Kozukai
-                ul
-                    li
-                        a(href="/accomplishments") 🥳
-                    li
-                        a(href="/log") ✍
-                    li
-                        a(href="/habits") ✨
-                    li
-                        a(href="/spendings") 💸
-            block content
+extends Base
+block layout
+    main(class="container")
+        nav
+            ul
+                li
+                    strong Kozukai
+            ul
+                li
+                    a(href="/accomplishments") 🥳
+                li
+                    a(href="/log") ✍
+                li
+                    a(href="/habits") ✨
+                li
+                    a(href="/spendings") 💸
+        block content
