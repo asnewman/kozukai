@@ -1,5 +1,7 @@
 import AccomplishmentService from "./AccomplishmentService";
 import SpendingService from "./SpendingService";
+import Accomplishment from "../models/Accomplishment";
+import Spending from "../models/Spending";
 
 class CashService {
     private accomplishmentService: AccomplishmentService;
@@ -11,8 +13,8 @@ class CashService {
     }
 
     async calculateCashTotalForUser(userId: string) {
-        const accomplishments = await this.accomplishmentService.getAccomplishmentsForUser(userId)
-        const spendings = await this.spendingService.getSpendingsForUser(userId)
+        const accomplishments: Accomplishment[] = await this.accomplishmentService.getAccomplishmentsForUser(userId)
+        const spendings: Spending[] = await this.spendingService.getSpendingsForUser(userId)
 
         const cashGained = accomplishments.reduce((accumulator: number, curr) => {
             return accumulator + curr.value
@@ -21,7 +23,7 @@ class CashService {
             return accumulator + curr.value
         }, 0)
 
-        return cashGained - cashLost
+        return parseFloat(Number(cashGained - cashLost).toFixed(2))
     }
 }
 
