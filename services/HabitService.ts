@@ -14,6 +14,10 @@ class HabitService {
         .select("*")
         .eq("userId", userId).eq("id", habitId);
 
+    if (response.body.length === 0) {
+      throw new Error("Habit not found")
+    }
+
     const habit = new Habit(response.body[0].name, response.body[0].value, response.body[0].id);
     return habit;
   }
@@ -48,6 +52,13 @@ class HabitService {
   habitStringToHabit(habitString: string, id?: number) {
     const habitArr = habitString.split(' ')
     const value = parseInt(habitString.split(" ").pop());
+
+    const isMalformed = isNaN(value) || habitArr.length === 1
+
+    if (isMalformed) {
+      throw new Error("Malformed habit string")
+    }
+
     let name = "";
 
     for (

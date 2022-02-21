@@ -34,7 +34,7 @@ class PasswordResetService {
         return passwordResets[0]
     }
 
-    async createPasswordResetForUser(email: string) {
+    async upsertPasswordResetForUser(email: string) {
         const code = Math.random().toString(36).substr(2, 5);
 
         const { error } = await this.supabaseClient.from("PasswordReset").upsert({

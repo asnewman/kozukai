@@ -107,7 +107,7 @@ app.post("/reset-password", async (req, res) => {
   const passwordResetService = ClassFactoryService.passwordResetService;
   const { email } = req.body;
 
-  await passwordResetService.createPasswordResetForUser(email);
+  await passwordResetService.upsertPasswordResetForUser(email);
 
   res.render("Message", {
     title: "Kozukai - Password reset",
