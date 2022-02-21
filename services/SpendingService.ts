@@ -12,7 +12,8 @@ class SpendingService {
         const response = await this.supabaseClient
             .from("Spendings")
             .select("*")
-            .eq("userId", userId);
+            .eq("userId", userId)
+            .order("created_at", { ascending: false});
 
         const spendings = response.body.map(
             (rawSpendings) =>
