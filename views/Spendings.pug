@@ -9,15 +9,21 @@ block content
         label(for="price") Price
         input(type="number" step="0.01" id="price" name="price" required)
         button(type="submit") Submit
+    each spending in spendings
+       form(action="remove-spending" method="post" id=`${spending.id}`)
     table
         thead
             tr
                 th(scope="col") Name
                 th(scope="col") Price
                 th(scope="col") When
+                th(scope="col")
         tbody
             each spending in spendings
                 tr
                     td #{spending.name}
                     td #{spending.value}
                     td #{spending.getTimeSince()}
+                    td
+                        input(class="hidden" type="text" name=`${spending.id}` form=`${spending.id}`)
+                        button(type="submit" class="remove-button" form=`${spending.id}`) Remove

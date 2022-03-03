@@ -272,6 +272,17 @@ app.post("/spendings", authCheck, async (req, res) => {
   });
 });
 
+app.post("/remove-spending", authCheck, async (req, res) => {
+  const spendingService = ClassFactoryService.spendingService;
+  await spendingService.removeSpending(parseInt(Object.keys(req.body)[0]), req.user.id)
+
+  const spendings = await spendingService.getSpendingsForUser(req.user.id);
+  return res.render("Spendings", {
+    title: "Kozukai - Spendings",
+    spendings,
+  });
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });

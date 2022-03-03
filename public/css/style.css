@@ -20,3 +20,8 @@
 .hidden {
     display: none;
 }
+
+.remove-button {
+    background-color: #F44336;
+    border-color: #F44336;
+}

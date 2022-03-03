@@ -4,11 +4,13 @@ class Spending {
     private readonly _name: string;
     private readonly _value: number;
     private readonly _timestamp: number;
+    private readonly _id: number;
 
-    constructor(name: string, value: number, timestamp: number) {
+    constructor(name: string, value: number, timestamp: number, id?: number) {
         this._name = name;
         this._value = value
         this._timestamp = timestamp;
+        this._id = id;
     }
 
     get name(): string {
@@ -19,6 +21,9 @@ class Spending {
     }
     get timestamp(): number {
         return this._timestamp;
+    }
+    get id(): number {
+        return this._id;
     }
 
     getTimeSince() {
