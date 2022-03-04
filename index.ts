@@ -195,6 +195,16 @@ app.get("/accomplishments", authCheck, async (req, res) => {
   });
 });
 
+app.post("/remove-accomplishment", authCheck, async (req, res) => {
+  const accomplishmentsService = ClassFactoryService.accomplishmentService;
+  await accomplishmentsService.removeAccomplishment(
+    parseInt(Object.keys(req.body)[0]),
+    req.user.id
+  );
+
+  res.redirect("/accomplishments");
+});
+
 app.get("/start", authCheck, (req, res) => {
   res.render("Start", { title: "Kozukai - Start" });
 });
@@ -238,12 +248,7 @@ app.post("/edit-habits", authCheck, async (req, res) => {
     await habitService.upsertHabitForUser(req.user.id, currHabit);
   }
 
-  const habits = await habitService.getHabitsForUser(req.user.id);
-
-  return res.render("ManageHabits", {
-    title: "Kozukai - Manage Habits",
-    habits,
-  });
+  res.redirect("/habits");
 });
 
 app.get("/spendings", authCheck, async (req, res) => {
@@ -264,24 +269,18 @@ app.post("/spendings", authCheck, async (req, res) => {
     new Spending(name, parseFloat(price), Date.now())
   );
 
-  const spendings = await spendingService.getSpendingsForUser(req.user.id);
-
-  return res.render("Spendings", {
-    title: "Kozukai - Spendings",
-    spendings,
-  });
+  res.redirect("/spendings");
 });
 
 app.post("/remove-spending", authCheck, async (req, res) => {
   const spendingService = ClassFactoryService.spendingService;
-  await spendingService.removeSpending(parseInt(Object.keys(req.body)[0]), req.user.id)
+  await spendingService.removeSpending(
+    parseInt(Object.keys(req.body)[0]),
+    req.user.id
+  );
 
-  const spendings = await spendingService.getSpendingsForUser(req.user.id);
-  return res.render("Spendings", {
-    title: "Kozukai - Spendings",
-    spendings,
-  });
-})
+  res.redirect("/spendings");
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

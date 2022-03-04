@@ -17,6 +17,17 @@
     top: 8px;
 }
 
+.accomplishment-item button {
+    position: absolute;
+    width: 60px;
+    bottom: 8px;
+    right: 8px;
+    font-size: 12px;
+    line-height: 12px;
+    margin-bottom: 0px;
+    padding: 5px 0;
+}
+
 .hidden {
     display: none;
 }

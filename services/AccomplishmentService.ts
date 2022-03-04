@@ -1,5 +1,5 @@
-import {SupabaseClient} from "@supabase/supabase-js";
-import {Habit} from "../models/Habit";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Habit } from "../models/Habit";
 import Accomplishment from "../models/Accomplishment";
 
 class AccomplishmentService {
@@ -17,16 +17,17 @@ class AccomplishmentService {
       .order("id", { ascending: false });
 
     if (response.error) {
-      throw new Error(response.error.message)
+      throw new Error(response.error.message);
     }
 
     return response.body.map(
-        (rawAccomplishment) =>
-            new Accomplishment(
-                rawAccomplishment.name,
-                rawAccomplishment.value,
-                rawAccomplishment.timestamp
-            )
+      (rawAccomplishment) =>
+        new Accomplishment(
+          rawAccomplishment.name,
+          rawAccomplishment.value,
+          rawAccomplishment.timestamp,
+          rawAccomplishment.id
+        )
     );
   }
 
@@ -37,6 +38,22 @@ class AccomplishmentService {
       timestamp: Date.now(),
       userId,
     });
+  }
+
+  async removeAccomplishment(accomplishmentId: number, userId: string) {
+    const accomplishmentToDeleteRes = await this.supabaseClient
+      .from("Accomplishments")
+      .select()
+      .match({ id: accomplishmentId, userId });
+
+    if (!accomplishmentToDeleteRes.body[0]) {
+      throw new Error("User does not own this accomplishment");
+    }
+
+    await this.supabaseClient
+      .from("Accomplishments")
+      .delete()
+      .match({ id: accomplishmentId });
   }
 }
 
