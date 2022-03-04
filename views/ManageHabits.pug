@@ -13,10 +13,15 @@ block content
         a(href="/create-habit")
             strong Create a new habit here.
     p Here are your habits:
-    small Format: name value
+    small
+        b Format: name value
     br
     br
     form(action="/edit-habits" method="post")
         each habit in habits
             input(type="text" name=`${habit.id}` value=`${habit.name} ${habit.value}`)
+            input(class="hidden" type="text" name=`${habit.id}` form=`${habit.id}`)
+            button(type="submit" class="remove-button" form=`${habit.id}`) Remove
         button(type="submit") Save
+    each habit in habits
+        form(action="remove-habit" method="post" id=`${habit.id}`)

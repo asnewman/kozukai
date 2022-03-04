@@ -34,6 +34,19 @@ class HabitService {
     return habits;
   }
 
+  async removeHabit(habitId: number, userId: string) {
+    const habitToDeleteRes = await this.supabaseClient
+        .from("Habits")
+        .select("*")
+        .match({ userId, id: habitId });
+
+    if (!habitToDeleteRes.body[0]) {
+      throw new Error("User does not own this habit");
+    }
+
+    await this.supabaseClient.from("Habits").delete().match({"id": habitId})
+  }
+
   async upsertHabitForUser(userId: string, habit: Habit) {
     await this.supabaseClient.from("Habits").upsert({
       name: habit.name,
