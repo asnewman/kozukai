@@ -8,6 +8,7 @@ import { Habit, HabitFrequency } from "./models/Habit";
 import ClassFactoryService from "./services/ClassFactoryService";
 import Spending from "./models/Spending";
 import authCheck from "./middleware/authCheck";
+import Emailer from "./services/Emailer";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -107,12 +108,13 @@ app.post("/reset-password", async (req, res) => {
   const passwordResetService = ClassFactoryService.passwordResetService;
   const { email } = req.body;
 
-  await passwordResetService.upsertPasswordResetForUser(email);
+  const code = await passwordResetService.upsertPasswordResetForUser(email);
+  await Emailer.sendPasswordReset(email, code)
 
   res.render("Message", {
     title: "Kozukai - Password reset",
     message:
-      "Password reset code created. Please contact ashleynewman@protonmail.com to receive the code.",
+      "Password reset code created. Please check your email.",
   });
 });
 
@@ -125,7 +127,7 @@ app.post("/password-change", async (req, res) => {
   const passwordResetService = ClassFactoryService.passwordResetService;
   const { email, resetcode, password } = req.body;
 
-  const passwordReset = passwordResetService.findPasswordReset(
+  const passwordReset = await passwordResetService.findPasswordReset(
     email,
     resetcode
   );
@@ -148,9 +150,11 @@ app.post("/password-change", async (req, res) => {
     return resFailure();
   }
 
+  await passwordResetService.invalidateResetCode(email, resetcode)
+
   res.render("Message", {
     title: "Kozukai - Password changed",
-    message: "Password successfully change",
+    message: "Password successfully change.",
   });
 
   function resFailure() {
