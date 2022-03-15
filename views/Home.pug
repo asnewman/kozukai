@@ -1,4 +1,34 @@
-extends Layout
+extends base
 
-block content
-    h1 Hello
+block layout
+    main(class="container")
+        nav
+            ul
+                li
+                    strong Kozukai
+            ul
+                li
+                    a(href="/register") Register
+                li
+                    a(href="/login") Login
+        img(id="home-image" src="https://i.imgur.com/TA4OeLC.jpg" alt="Kozukai in action")
+        h2 What is this?
+        p Kozukai (“allowance” in Japanese) is a habit tracking method meant to boost productivity and encouraging better spending habits. The system entails coming up with habits, attaching dollar values to them, and tracking whenever you’ve completed a habit. When a habit is complete, its value is added to a running cash total. Whenever you spend money, you subtract cash from the same running total.
+        p As an example, here are two common habits:
+            ul
+                li Exercise: $8
+            ul
+                li Read: $2
+        p Throughout the week, let’s say you exercised 4 times and read 7 times. As a result, your banked cash is $46. This means you have earned $46 to spend on anything you like or need.
+        p The values for these habits are up to you. Balance frequency and importance to come up with values. Don’t worry, you can adjust a value if a habit is too rewarding or not rewarding enough.
+        h2 Why does Kozukai work?
+        p Kozukai works because the system accomplishes the following:
+         ul
+            li It’s simple and requires little effort to track habits and spendings
+            li It helps your prioritize habits
+            li It’s rewarding to see the bank value go up
+            li You can equate potential purchases to habits and calculate how many times you’d have to do them to come up with the cash
+            li You feel that you’ve earned what you buy
+            li If you want to make an expensive purchase, it encourages you to be on top of your habits and come up with new habits that are very rewarding (both in money and life improvement)
+        h2 How do I start?
+        p Kozukai is free to use, both in terms of money and privacy (you can even turn off JavaScript in your browser and everything will work!). Click "Register" at the top of the page to create an account and you should be up and running within in minutes. If you have any questions or suggestion, feel free to email ash@kozukaihabit.com. Happy habit tracking!

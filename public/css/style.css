@@ -1,3 +1,11 @@
+#home-image {
+    box-shadow:  0px 12px 24px -12px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow:  0px 12px 24px -12px rgba(0, 0, 0, 0.5);
+    margin: 30px auto 50px;
+    width: 80%;
+    display: block;
+}
+
 .accomplishment-item {
     padding: 20px;
     box-shadow: 0 0.125rem 1rem rgba(27, 40, 50, 0.04),0 0.125rem 2rem rgba(27, 40, 50, 0.08),0 0 0 0.0625rem rgba(27, 40, 50, 0.024);

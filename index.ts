@@ -27,8 +27,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.get("/", authCheck, (req, res) => {
-  res.redirect("/login");
+app.get("/", (req, res) => {
+  res.render("Home")
 });
 
 app.get("/register", async (req, res) => {
