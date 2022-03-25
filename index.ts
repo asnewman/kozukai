@@ -246,23 +246,29 @@ app.get("/habits", authCheck, async (req, res) => {
 
 app.post("/edit-habits", authCheck, async (req, res) => {
   const habitService = ClassFactoryService.habitService;
-  const editedHabits = habitService.habitStringMapToHabits(req.body);
+  try {
+    const editedHabits = habitService.habitStringMapToHabits(req.body);
 
-  for (const currHabit of editedHabits) {
-    await habitService.upsertHabitForUser(req.user.id, currHabit);
+    for (const currHabit of editedHabits) {
+      await habitService.upsertHabitForUser(req.user.id, currHabit);
+    }
   }
-
-  res.redirect("/habits");
+  finally {
+    res.redirect("/habits");
+  }
 });
 
 app.post("/remove-habit", authCheck, async (req, res) => {
   const habitService = ClassFactoryService.habitService;
-  await habitService.removeHabit(
+  try {
+    await habitService.removeHabit(
       parseInt(Object.keys(req.body)[0]),
       req.user.id
-  )
-
-  res.redirect("/habits")
+    )
+  }
+  finally {
+    res.redirect("/habits")
+  }
 });
 
 app.get("/spendings", authCheck, async (req, res) => {

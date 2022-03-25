@@ -69,7 +69,7 @@ class HabitService {
     const isMalformed = isNaN(value) || habitArr.length === 1
 
     if (isMalformed) {
-      throw new Error("Malformed habit string")
+      throw new Error(`Malformed habit string: ${habitString}`)
     }
 
     let name = "";
