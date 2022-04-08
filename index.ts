@@ -265,12 +265,15 @@ app.post("/edit-habit", authCheck, async (req, res) => {
 
 app.post("/remove-habit", authCheck, async (req, res) => {
   const habitService = ClassFactoryService.habitService;
-  await habitService.removeHabit(
+  try {
+    await habitService.removeHabit(
       parseInt(Object.keys(req.body)[0]),
       req.user.id
-  )
-
-  res.redirect("/habits")
+    )
+  }
+  finally {
+    res.redirect("/habits")
+  }
 });
 
 app.get("/spendings", authCheck, async (req, res) => {
