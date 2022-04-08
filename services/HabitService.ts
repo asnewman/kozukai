@@ -12,7 +12,7 @@ class HabitService {
     const response = await this.supabaseClient
         .from("Habits")
         .select("*")
-        .eq("userId", userId).eq("id", habitId);
+        .eq("userId", userId).eq("id", habitId)
 
     if (response.body.length === 0) {
       throw new Error("Habit not found")
@@ -26,7 +26,8 @@ class HabitService {
     const response = await this.supabaseClient
       .from("Habits")
       .select("*")
-      .eq("userId", userId);
+      .eq("userId", userId)
+      .order("created_at", { ascending: true })
 
     const habits = response.body.map(
       (rawHabit) => new Habit(rawHabit.name, rawHabit.value, rawHabit.id)
@@ -48,12 +49,16 @@ class HabitService {
   }
 
   async upsertHabitForUser(userId: string, habit: Habit) {
-    await this.supabaseClient.from("Habits").upsert({
+    const res = await this.supabaseClient.from("Habits").upsert({
       name: habit.name,
       value: habit.value,
       userId,
       id: habit.id
     });
+    
+    if (res.error) {
+      console.error(res)
+    }
   }
 
   habitStringMapToHabits(habitStringMap: Record<string, string>) {

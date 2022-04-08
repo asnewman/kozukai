@@ -244,13 +244,21 @@ app.get("/habits", authCheck, async (req, res) => {
   });
 });
 
-app.post("/edit-habits", authCheck, async (req, res) => {
+app.post("/edit-habit", authCheck, async (req, res) => {
   const habitService = ClassFactoryService.habitService;
-  const editedHabits = habitService.habitStringMapToHabits(req.body);
-
-  for (const currHabit of editedHabits) {
-    await habitService.upsertHabitForUser(req.user.id, currHabit);
+  
+  const id: number = parseInt(req.query.habitId)
+  const name: string = req.body.habitname;
+  const value: number = parseInt(req.body.habitvalue);
+  
+  if (!name || !value || !id) {
+    return res.redirect("/habits");
   }
+  
+  const editedHabit = new Habit(name, value, id);
+
+  await habitService.upsertHabitForUser(req.user.id, editedHabit);
+  
 
   res.redirect("/habits");
 });
