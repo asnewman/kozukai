@@ -1,3 +1,5 @@
+import User from "./User";
+
 export type HabitFrequency = "multi" | "once" | "sometimes";
 
 export class Habit {
@@ -31,16 +33,16 @@ export class Habit {
         return this._id;
     }
 
-    setValueFromFrequency(frequency: HabitFrequency) {
+    setValueFromFrequency(frequency: HabitFrequency, user: User) {
         switch(frequency) {
             case "multi":
-               this._value = 2;
+               this._value = user.defaultValues.multi;
                break;
             case "once":
-                this._value = 5;
+                this._value = user.defaultValues.once;
                 break;
             case "sometimes":
-                this._value = 8;
+                this._value = user.defaultValues.sometimes;
                 break;
             default:
                 throw new Error(`Unrecognized frequency '${frequency}'`);

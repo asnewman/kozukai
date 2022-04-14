@@ -7,9 +7,9 @@ block content
         input(type="text" id="currencySymbol" name="currencySymbol" value=`${currencySymbol}` maxlength="4" required)
         h4 Default values
         label(for="multi") Multiple times a day
-        input(id="multi" type="number" name="multi" step="1" pattern="[0-9]" value=`${multi}`)
+        input(id="multi" type="number" name="multi" step="1" pattern="[0-9]" value=`${multi}` required)
         label(for="once") Once a day
-        input(id="once" type="number" name="once" step="1" pattern="[0-9]" value=`${once}`)
+        input(id="once" type="number" name="once" step="1" pattern="[0-9]" value=`${once}` required)
         label(for="sometimes") Sometimes
-        input(id="sometimes" type="number" name="sometimes" step="1" pattern="[0-9]" value=`${sometimes}`)
+        input(id="sometimes" type="number" name="sometimes" step="1" pattern="[0-9]" value=`${sometimes}` required)
         button(type="submit") Save

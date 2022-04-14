@@ -219,11 +219,13 @@ app.get("/create-habit", authCheck, (req, res) => {
 });
 
 app.post("/new-habit", authCheck, async (req, res) => {
+  const userService = ClassFactoryService.userService;
   const name: string = req.body.name;
   const frequency: HabitFrequency = req.body.frequency;
 
   const habit = new Habit(name, undefined, undefined);
-  habit.setValueFromFrequency(frequency);
+  const user = await userService.getUser(req.user.id)
+  habit.setValueFromFrequency(frequency, user);
 
   const habitService = ClassFactoryService.habitService;
   await habitService.upsertHabitForUser(req.user.id, habit);
