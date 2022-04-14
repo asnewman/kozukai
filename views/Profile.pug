@@ -1,0 +1,15 @@
+extends Layout
+
+block content
+    h1 #{headerText}
+    form(action="profile" method="post")
+        label(for="currencySymbol") Currency symbol
+        input(type="text" id="currencySymbol" name="currencySymbol" value=`${currencySymbol}` maxlength="4" required)
+        h4 Default values
+        label(for="multi") Multiple times a day
+        input(id="multi" type="number" name="multi" step="1" pattern="[0-9]" value=`${multi}`)
+        label(for="once") Once a day
+        input(id="once" type="number" name="once" step="1" pattern="[0-9]" value=`${once}`)
+        label(for="sometimes") Sometimes
+        input(id="sometimes" type="number" name="sometimes" step="1" pattern="[0-9]" value=`${sometimes}`)
+        button(type="submit") Save

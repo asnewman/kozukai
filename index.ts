@@ -9,6 +9,7 @@ import ClassFactoryService from "./services/ClassFactoryService";
 import Spending from "./models/Spending";
 import authCheck from "./middleware/authCheck";
 import Emailer from "./services/Emailer";
+import User from "./models/User";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -305,6 +306,30 @@ app.post("/remove-spending", authCheck, async (req, res) => {
   );
 
   res.redirect("/spendings");
+});
+
+app.get("/profile", authCheck, async (req, res) => {
+  const userService = ClassFactoryService.userService;
+  const user = await userService.getUser(req.user.id);
+
+  return res.render("Profile", {
+    title: "Kozukai - Profile",
+    headerText: "Profile",
+    currencySymbol: user.currencySymbol,
+    multi: user.defaultValues.multi,
+    once: user.defaultValues.once,
+    sometimes: user.defaultValues.sometimes,
+  });
+});
+
+app.post("/profile", authCheck, async (req, res) => {
+  const { currencySymbol, multi, once, sometimes } = req.body;
+  const updatedUser = new User("", currencySymbol, { multi, once, sometimes }, req.user.id)
+  const userService = ClassFactoryService.userService;
+
+  await userService.updateUser(updatedUser)
+
+  res.redirect("/profile")
 });
 
 app.listen(port, () => {

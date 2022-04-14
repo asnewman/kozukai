@@ -4,6 +4,7 @@ import HabitService from "./HabitService";
 import SpendingService from "./SpendingService";
 import CashService from "./CashService";
 import PasswordResetService from "./PasswordResetService";
+import UserService from "./UserService";
 
 class ClassFactoryService {
     private static _supabaseClient: SupabaseClient | null = null
@@ -12,6 +13,7 @@ class ClassFactoryService {
     private static _spendingService: SpendingService | null = null
     private static _cashService: CashService | null = null
     private static _passwordResetService: PasswordResetService | null = null
+    private static _userService: UserService | null = null
 
     static get supabaseClient(): SupabaseClient{
         if (!this._supabaseClient) {
@@ -59,6 +61,14 @@ class ClassFactoryService {
         }
 
         return this._passwordResetService
+    }
+
+    static get userService(): UserService {
+        if (!this._userService) {
+            this._userService = new UserService(this.supabaseClient)
+        }
+
+        return this._userService;
     }
 }
 
