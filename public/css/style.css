@@ -46,9 +46,6 @@
 }
 
 .banner {
-    position: absolute;
-    top: 0;
-    left: 0;
     padding: 10px;
     background-color: #E2FAE6;
     color: #545454;
