@@ -9,7 +9,7 @@ block content
         a(href="/habits") 👉 Manage your habits.
     br
     br
-    h2 Total 💸: $#{totalCash}
+    h2 Total 💸: #{currencySymbol}#{totalCash}
     each accomplishment in accomplishments
         div(class="accomplishment-item")
             p #{accomplishment.name}

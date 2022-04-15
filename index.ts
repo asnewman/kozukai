@@ -193,9 +193,13 @@ app.get("/accomplishments", authCheck, async (req, res) => {
   const accomplishments =
     await accomplishmentsService.getAccomplishmentsForUser(req.user.id);
 
+  const userService = ClassFactoryService.userService;
+  const user = await userService.getUser(req.user.id)
+
   res.render("Accomplishments", {
     title: "Kozukai - Accomplishments",
     totalCash: await cashService.calculateCashTotalForUser(req.user.id),
+    currencySymbol: user.currencySymbol,
     accomplishments,
   });
 });
@@ -232,6 +236,7 @@ app.post("/new-habit", authCheck, async (req, res) => {
 
   return res.render("NewHabit", {
     title: "Kozukai - New Habit Created",
+    currencySymbol: user.currencySymbol,
     name: habit.name,
     value: habit.value,
   });

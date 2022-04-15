@@ -44,3 +44,15 @@
     background-color: #F44336;
     border-color: #F44336;
 }
+
+.banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background-color: #E2FAE6;
+    color: #545454;
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+}
