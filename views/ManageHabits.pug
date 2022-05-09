@@ -3,15 +3,15 @@ extends Layout
 block content
     h1 Manage Habits ✨
     small
-        a(href="/accomplishments") 👉 View your accomplishments.
+        a(href="/accomplishments") 👉 #{text.view_accomp} 
     br
     small
-        a(href="/log") 👉 Log an accomplishments.
+        a(href="/log") 👉 #{text.log_new} 
     br
     br
     p
         a(href="/create-habit")
-            strong Create a new habit here.
+            strong #{text.create_habit}
     p Here are your habits:    
     br
     each habit in habits

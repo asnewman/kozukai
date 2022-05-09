@@ -3,10 +3,10 @@ extends Layout
 block content
     h1 Here's what you've accomplished 🥳
     small
-        a(href="/log") 👉 Log an accomplishments.
+        a(href="/log") 👉 #{text.log_new}
     br
     small
-        a(href="/habits") 👉 Manage your habits.
+        a(href="/habits") 👉 #{text.manage}
     br
     br
     h2 Total 💸: #{currencySymbol}#{totalCash}

@@ -1,6 +1,7 @@
 extends Base
 block layout
-    div(class="banner") New features! You can now change your currency symbol and default habit values in the new profile page 🧑
+    if text.banner
+      div(class="banner") #{text.banner}
     main(class="container")
         nav
             ul
@@ -8,10 +9,10 @@ block layout
                     strong Kozukai
                     br
                     small
-                      a(href="https://ash.mataroa.blog/blog/kozukai-change-log/" target="_blank") View changelog
+                      a(href="https://ash.mataroa.blog/blog/kozukai-change-log/" target="_blank") #{changelog}
                     br
                     small
-                      a(href="mailto:ash@kozukaihabit.com") Report bug or feedback
+                      a(href="mailto:ash@kozukaihabit.com") #{report}          
             ul
                 li
                     a(href="/accomplishments") 🥳

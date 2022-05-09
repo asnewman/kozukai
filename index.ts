@@ -10,6 +10,7 @@ import Spending from "./models/Spending";
 import authCheck from "./middleware/authCheck";
 import Emailer from "./services/Emailer";
 import User from "./models/User";
+import DittoText from "./ditto/Kozukai.json";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -39,6 +40,7 @@ app.get("/register", async (req, res) => {
     action: "/register",
     error: "",
     showLoginLink: true,
+    text: DittoText
   });
 });
 
@@ -72,6 +74,7 @@ app.get("/login", async (req, res) => {
     error: "",
     showPasswordResetLink: true,
     showRegisterLink: true,
+    text: DittoText
   });
 });
 
@@ -92,6 +95,7 @@ app.post("/login", async (req, res) => {
       error: error.message,
       showPasswordResetLink: true,
       showRegisterLink: true,
+      text: DittoText
     });
   }
 
@@ -102,6 +106,7 @@ app.post("/login", async (req, res) => {
 app.get("/reset-password", async (req, res) => {
   res.render("PasswordReset", {
     title: "Kozukai - Reset password",
+    text: DittoText
   });
 });
 
@@ -116,11 +121,15 @@ app.post("/reset-password", async (req, res) => {
     title: "Kozukai - Password reset",
     message:
       "Password reset code created. Please check your email.",
+    text: DittoText
   });
 });
 
 app.get("/password-change", async (req, res) => {
-  res.render("PasswordChange", { title: "Kozukai - Password change" });
+  res.render("PasswordChange", { 
+    title: "Kozukai - Password change",
+    text: DittoText
+  });
 });
 
 app.post("/password-change", async (req, res) => {
@@ -156,12 +165,14 @@ app.post("/password-change", async (req, res) => {
   res.render("Message", {
     title: "Kozukai - Password changed",
     message: "Password successfully change.",
+    text: DittoText
   });
 
   function resFailure() {
     return res.render("Message", {
       title: "Kozukai - Password change",
       message: "Failed to set new password",
+      text: DittoText
     });
   }
 });
@@ -173,6 +184,7 @@ app.get("/log", authCheck, async (req, res) => {
   res.render("LogAHabit", {
     title: "Kozukai - Log A Habit",
     habits,
+    text: DittoText
   });
 });
 
@@ -201,6 +213,7 @@ app.get("/accomplishments", authCheck, async (req, res) => {
     totalCash: await cashService.calculateCashTotalForUser(req.user.id),
     currencySymbol: user.currencySymbol,
     accomplishments,
+    text: DittoText
   });
 });
 
@@ -215,11 +228,17 @@ app.post("/remove-accomplishment", authCheck, async (req, res) => {
 });
 
 app.get("/start", authCheck, (req, res) => {
-  res.render("Start", { title: "Kozukai - Start" });
+  res.render("Start", { 
+    title: "Kozukai - Start",
+    text: DittoText
+  });
 });
 
 app.get("/create-habit", authCheck, (req, res) => {
-  return res.render("CreateHabit", { title: "Kozukai - Create Habit" });
+  return res.render("CreateHabit", { 
+    title: "Kozukai - Create Habit",
+    text: DittoText
+  });
 });
 
 app.post("/new-habit", authCheck, async (req, res) => {
@@ -239,6 +258,7 @@ app.post("/new-habit", authCheck, async (req, res) => {
     currencySymbol: user.currencySymbol,
     name: habit.name,
     value: habit.value,
+    text: DittoText
   });
 });
 
@@ -249,6 +269,7 @@ app.get("/habits", authCheck, async (req, res) => {
   return res.render("ManageHabits", {
     title: "Kozukai - Manage Habits",
     habits,
+    text: DittoText
   });
 });
 
@@ -291,6 +312,7 @@ app.get("/spendings", authCheck, async (req, res) => {
   return res.render("Spendings", {
     title: "Kozukai - Spendings",
     spendings,
+    text: DittoText
   });
 });
 
@@ -326,6 +348,7 @@ app.get("/profile", authCheck, async (req, res) => {
     multi: user.defaultValues.multi,
     once: user.defaultValues.once,
     sometimes: user.defaultValues.sometimes,
+    text: DittoText
   });
 });
 
