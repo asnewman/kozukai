@@ -1,4 +1,4 @@
-name: Update Ditto Data
+name: Ditto Text Update
 on: workflow_dispatch
 env:
   DITTO_API_KEY: ${{ secrets.DITTO_API_KEY }}
@@ -17,14 +17,19 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: printenv
       - name: Ditto pull
         run: |
           npx ditto-cli pull
+      - name: Autoclose outdated Ditto text update PRs
+        uses: roots/issue-closer@v1.1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-close-message: "This Ditto text update PR has been closed as it is out of date"
+          issue-pattern: "Automated change by the Ditto Text Updater action"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: "ditto: text update ${{ steps.datetime.outputs.datetime }}" 
           title: Ditto text update ${{ steps.datetime.outputs.datetime  }}
-          body: Automated change by the Ditto Updater action
+          body: Automated change by the Ditto Text Updater action
           branch: ditto-update-${{ steps.datetime.outputs.datetime }}
