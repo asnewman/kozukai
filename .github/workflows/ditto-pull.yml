@@ -1,4 +1,4 @@
-name: Ditto Text Update
+name: Ditto Text Updater
 on: workflow_dispatch
 env:
   DITTO_API_KEY: ${{ secrets.DITTO_API_KEY }}
