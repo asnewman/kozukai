@@ -2,6 +2,7 @@ name: Ditto Text Update
 on: workflow_dispatch
 env:
   DITTO_API_KEY: ${{ secrets.DITTO_API_KEY }}
+  ACTIONS_RUNNER_DEBUG: true
 jobs:
   updateDittoData:
     runs-on: ubuntu-latest
