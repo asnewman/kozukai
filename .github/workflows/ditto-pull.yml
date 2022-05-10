@@ -25,7 +25,7 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           pr-close-message: "This Ditto text update PR has been closed as it is out of date"
-          pr-pattern: ".*Automated change by the Ditto Text Updater action.*"
+          pr-pattern: "^(?!Automated change by the Ditto Text Updater action).*$"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
