@@ -1,5 +1,7 @@
 name: Update Ditto Data
 on: workflow_dispatch
+env:
+  DITTO_API_KEY: ${{ secrets.DITTO_API_KEY }}
 jobs:
   updateDittoData:
     runs-on: ubuntu-latest
@@ -15,7 +17,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: printenv
       - name: Ditto pull
         run: |
           npx ditto-cli pull
