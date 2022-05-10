@@ -2,7 +2,6 @@ name: Ditto Text Update
 on: workflow_dispatch
 env:
   DITTO_API_KEY: ${{ secrets.DITTO_API_KEY }}
-  ACTIONS_RUNNER_DEBUG: true
 jobs:
   updateDittoData:
     runs-on: ubuntu-latest
@@ -25,8 +24,8 @@ jobs:
         uses: roots/issue-closer@v1.1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-close-message: "This Ditto text update PR has been closed as it is out of date"
-          issue-pattern: ".*Automated change by the Ditto Text Updater action.*"
+          pr-close-message: "This Ditto text update PR has been closed as it is out of date"
+          pr-pattern: "Automated change by the Ditto Text Updater action"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
