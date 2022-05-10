@@ -3,7 +3,7 @@ on: workflow_dispatch
 env:
   DITTO_API_KEY: ${{ secrets.DITTO_API_KEY }}
 jobs:
-  updateDittoData:
+  Update Ditto Text:
     runs-on: ubuntu-latest
     steps:
       - name: Set current date as env variable
