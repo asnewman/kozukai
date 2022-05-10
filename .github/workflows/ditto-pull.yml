@@ -24,4 +24,4 @@ jobs:
           commit-message: ditto text update ${{ steps.datetime.outputs.datetime }} 
           title: Ditto text update ${{ steps.datetime.outputs.datetime  }}
           body: Automated change by the Ditto Updater action
-          branch: ditto-update-$${{ steps.datetime.outputs.datetime }}
+          branch: ditto-update-${{ steps.datetime.outputs.datetime }}
