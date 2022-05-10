@@ -24,7 +24,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: ditto: text update 
+          commit-message: "ditto: text update" 
           title: Ditto text update ${{ steps.datetime.outputs.datetime  }}
           body: Automated change by the Ditto Updater action
           branch: ditto-update-${{ steps.datetime.outputs.datetime }}
