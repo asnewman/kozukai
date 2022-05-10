@@ -7,6 +7,11 @@ jobs:
       - name: Set current date as env variable
         id: datetime
         run: echo "::set-output name=datetime::$(date +'%Y-%m-%dT%H:%M:%S')"
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install --global @dittowords/cli
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
