@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Set current date as env variable
         id: datetime
-        run: echo "::set-output name=datetime::$(date +'%Y-%m-%dT%H:%M:%S')"
+        run: echo "::set-output name=datetime::$(date +'%Y-%m-%dT-%H%M%S')"
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -24,7 +24,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: "ditto: text update" 
+          commit-message: "ditto: text update ${{ steps.datetime.outputs.datetime }}" 
           title: Ditto text update ${{ steps.datetime.outputs.datetime  }}
           body: Automated change by the Ditto Updater action
           branch: ditto-update-${{ steps.datetime.outputs.datetime }}
