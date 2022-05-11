@@ -47,7 +47,8 @@ class AccomplishmentService {
       .match({ id: accomplishmentId, userId });
 
     if (!accomplishmentToDeleteRes.body[0]) {
-      throw new Error("User does not own this accomplishment");
+      console.error("User does not own this accomplishment");
+      return;
     }
 
     await this.supabaseClient
