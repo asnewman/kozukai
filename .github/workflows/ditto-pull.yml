@@ -1,29 +1,10 @@
 name: Ditto Text Updater
 on: workflow_dispatch
-env:
-  DITTO_API_KEY: ${{ secrets.DITTO_API_KEY }}
 jobs:
   Update Ditto Text:
     runs-on: ubuntu-latest
     steps:
-      - name: Set current date as env variable
-        id: datetime
-        run: echo "::set-output name=datetime::$(date +'%Y-%m-%dT-%H%M%S')"
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+      - name: Pull Ditto text
+        uses: dittowords/ditto-text-updater@main
         with:
-          node-version: 12
-      - run: npm install --global @dittowords/cli
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Ditto pull
-        run: |
-          npx ditto-cli pull
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          commit-message: "ditto: text update ${{ steps.datetime.outputs.datetime }}" 
-          title: Ditto text update ${{ steps.datetime.outputs.datetime  }}
-          body: Automated change by the Ditto Text Updater action
-          branch: ditto-update-${{ steps.datetime.outputs.datetime }}
+          ditto-api-key: ${{ secrets.DITTO_API_KEY }}
