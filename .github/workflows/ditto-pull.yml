@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Ditto text
-        uses: dittowords/ditto-text-updater@main
+        uses: dittowords/ditto-github-action@main
         with:
           ditto-api-key: ${{ secrets.DITTO_API_KEY }}
