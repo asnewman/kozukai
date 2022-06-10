@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Ditto text
-        uses: dittowords/ditto-github-action@v0.1.0
+        uses: dittowords/ditto-github-action@ash/dit-1724-github-action-allow-user-to-specify-root
         with:
           ditto-api-key: ${{ secrets.DITTO_API_KEY }}
