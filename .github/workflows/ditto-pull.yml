@@ -8,3 +8,4 @@ jobs:
         uses: dittowords/ditto-github-action@ash/dit-1724-github-action-allow-user-to-specify-root
         with:
           ditto-api-key: ${{ secrets.DITTO_API_KEY }}
+          ditto-dir: "src/ditto"
