@@ -206,15 +206,21 @@ app.get("/accomplishments", authCheck, async (req, res) => {
     await accomplishmentsService.getAccomplishmentsForUser(req.user.id);
 
   const userService = ClassFactoryService.userService;
-  const user = await userService.getUser(req.user.id)
+  try {
+    const user = await userService.getUser(req.user.id)
 
-  res.render("Accomplishments", {
-    title: "Kozukai - Accomplishments",
-    totalCash: await cashService.calculateCashTotalForUser(req.user.id),
-    currencySymbol: user.currencySymbol,
-    accomplishments,
-    text: DittoText
-  });
+    res.render("Accomplishments", {
+      title: "Kozukai - Accomplishments",
+      totalCash: await cashService.calculateCashTotalForUser(req.user.id),
+      currencySymbol: user.currencySymbol,
+      accomplishments,
+      text: DittoText
+    });
+  }
+  catch(e) {
+    console.error(e);
+    return res.status(500).send("Internal error. Please message ash@kozukaihabit.com for support.")
+  }
 });
 
 app.post("/remove-accomplishment", authCheck, async (req, res) => {
@@ -247,19 +253,25 @@ app.post("/new-habit", authCheck, async (req, res) => {
   const frequency: HabitFrequency = req.body.frequency;
 
   const habit = new Habit(name, undefined, undefined);
-  const user = await userService.getUser(req.user.id)
-  habit.setValueFromFrequency(frequency, user);
+  try {
+    const user = await userService.getUser(req.user.id)
+    habit.setValueFromFrequency(frequency, user);
 
-  const habitService = ClassFactoryService.habitService;
-  await habitService.upsertHabitForUser(req.user.id, habit);
+    const habitService = ClassFactoryService.habitService;
+    await habitService.upsertHabitForUser(req.user.id, habit);
 
-  return res.render("NewHabit", {
-    title: "Kozukai - New Habit Created",
-    currencySymbol: user.currencySymbol,
-    name: habit.name,
-    value: habit.value,
-    text: DittoText
-  });
+    return res.render("NewHabit", {
+      title: "Kozukai - New Habit Created",
+      currencySymbol: user.currencySymbol,
+      name: habit.name,
+      value: habit.value,
+      text: DittoText
+    });
+  }
+  catch(e) {
+    console.error(e);
+    return res.status(500).send("Internal error. Please message ash@kozukaihabit.com for support.")
+  }
 });
 
 app.get("/habits", authCheck, async (req, res) => {
