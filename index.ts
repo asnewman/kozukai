@@ -79,6 +79,8 @@ app.get("/login", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
+  return res.send("Login currently disabled. Working on a fix...")
+  console.log("request received")
   const supabaseClient = ClassFactoryService.supabaseClient;
   const { email, password } = req.body;
 
