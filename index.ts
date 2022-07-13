@@ -79,30 +79,34 @@ app.get("/login", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  return res.send("Login currently disabled. Working on a fix...")
-  console.log("request received")
   const supabaseClient = ClassFactoryService.supabaseClient;
   const { email, password } = req.body;
 
-  const { session, error } = await supabaseClient.auth.signIn({
-    email,
-    password,
-  });
-
-  if (error) {
-    return res.render("EmailPasswordSubmit", {
-      title: "Kozukai - Login",
-      pageTitle: "Login",
-      action: "/login",
-      error: error.message,
-      showPasswordResetLink: true,
-      showRegisterLink: true,
-      text: DittoText
+  try {
+    const { session, error } = await supabaseClient.auth.signIn({
+      email,
+      password,
     });
-  }
 
-  res.cookie("token", session.access_token);
-  return res.redirect("/accomplishments");
+    if (error) {
+      return res.render("EmailPasswordSubmit", {
+        title: "Kozukai - Login",
+        pageTitle: "Login",
+        action: "/login",
+        error: error.message,
+        showPasswordResetLink: true,
+        showRegisterLink: true,
+        text: DittoText
+      });
+    }
+
+    res.cookie("token", session.access_token);
+    return res.redirect("/accomplishments");
+  }
+  catch(e) {
+    console.error(e)
+    return res.status(500).send("Could not reach database. Please contact ash@kozukaihabit.com for help.")
+  }
 });
 
 app.get("/reset-password", async (req, res) => {
