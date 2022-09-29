@@ -8,4 +8,3 @@ jobs:
         uses: dittowords/ditto-github-action@v0.2.0
         with:
           ditto-api-key: ${{ secrets.DITTO_API_KEY }}
-          ditto-dir: "nested/ditto"
