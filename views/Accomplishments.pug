@@ -16,5 +16,5 @@ block content
             p 💸 #{accomplishment.value}
             form(action="remove-accomplishment" method="post")
                 input(class="hidden" type="text" name=`${accomplishment.id}`)
-                button(type="submit" class="remove-button") Remove
+                button(type="submit" class="remove-button" style="width: 60px") Remove
             small ⏰ #{accomplishment.getSince()}
